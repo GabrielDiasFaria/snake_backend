@@ -3,8 +3,17 @@ let app = exp();
 const { initGame, gameLoop, getUpdatedVelocity } = require('./game')
 const { FRAME_RATE } = require('./constants');
 const { makeid } = require('./utils');
+const os = require("os");
 
-const io = require('socket.io')(app.listen(9009));
+let port = 0
+
+
+if (os.hostname() == 'DESKTOP-0U8ABS9' || os.hostname() == 'DESKTOP-2CHUVIG')
+    port = 9009
+else
+    port = process.env.PORT
+
+const io = require('socket.io')(app.listen(port));
 
 app.all('/', function (request, response, next) {
     response.header("Access-Control-Allow-Origin", "*");
